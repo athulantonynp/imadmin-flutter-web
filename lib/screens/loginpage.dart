@@ -14,6 +14,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
+  bool _isLoggingLoading=false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +26,8 @@ class _LoginPageState extends State<LoginPage> {
         color: AdminColors.fromHex("#212121"),
         alignment:Alignment(0.0, 0.0) ,
         child: Container(
-          width: 500,
-          height: 500,
+          width: 400,
+          height: 400,
           child: new Card(
            semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -38,15 +40,36 @@ class _LoginPageState extends State<LoginPage> {
             children: <Widget>[
 
                 Text("Login as user",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold)),
-                TextField(decoration: InputDecoration(border: InputBorder.none,hintText: 'Username',contentPadding: EdgeInsets.all(20) ),),
-                TextField(decoration: InputDecoration(border: InputBorder.none,hintText: 'Password',contentPadding: EdgeInsets.all(20) ),),
-                RaisedButton(onPressed: (){},child: Text('Login',style: TextStyle(fontSize: 20) ),
-        )
-            ],
-          ),
-        ),
+               Padding(
+                 padding: EdgeInsets.fromLTRB(50,20, 50, 0),
+                 child:  TextField(
+                  decoration: InputDecoration(
+                  border:const OutlineInputBorder( borderSide: const BorderSide(color: Colors.grey, width: 1.0))
+                  ,labelText: "Username",
+                  contentPadding: EdgeInsets.all(20))
+                  ),
+               ),
+                Padding(
+                 padding:EdgeInsets.fromLTRB(50, 20, 50, 20),
+                 child:  TextField(
+                  decoration: InputDecoration(
+                  border:const OutlineInputBorder( borderSide: const BorderSide(color: Colors.grey, width: 1.0))
+                  ,labelText: "Password",contentPadding: EdgeInsets.all(20)),
+                  obscureText: true,
+                  ),
+               ),
+              _isLoggingLoading ? CircularProgressIndicator() : RaisedButton(onPressed: (){
+              
+                  setState(() {
+                     _isLoggingLoading=true;
+                  });
+                  
+                },child: Text('Login',style: TextStyle(fontSize: 20)),splashColor: Colors.lightBlueAccent,
+                elevation: 4,)
+                 
+        ],
         ),
       )
-    );
+    )));
   }
 }
