@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imadmin/api/imadminapi.dart';
 import 'package:imadmin/utils/admincolors.dart';
 
 
@@ -15,12 +16,28 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
 
   bool _isLoggingLoading=false;
+  final userNameController=TextEditingController();
+  final passwordController=TextEditingController();
+
+
+
+  void _performLogin() async{
+
+    setState(() {_isLoggingLoading=true; });
+    var api=MonsterAdminApi();
+    api.performLogin(userNameController.text,passwordController.text).then((value)=>{
+      print(value)
+    });
+    
+  }
+
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title:  Text(widget.title),
       ),
       body: Container(
         color: AdminColors.fromHex("#212121"),
@@ -43,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                Padding(
                  padding: EdgeInsets.fromLTRB(50,20, 50, 0),
                  child:  TextField(
+                   controller: userNameController,
                   decoration: InputDecoration(
                   border:const OutlineInputBorder( borderSide: const BorderSide(color: Colors.grey, width: 1.0))
                   ,labelText: "Username",
@@ -52,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                  padding:EdgeInsets.fromLTRB(50, 20, 50, 20),
                  child:  TextField(
+                   controller: passwordController,
                   decoration: InputDecoration(
                   border:const OutlineInputBorder( borderSide: const BorderSide(color: Colors.grey, width: 1.0))
                   ,labelText: "Password",contentPadding: EdgeInsets.all(20)),
@@ -59,11 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                ),
               _isLoggingLoading ? CircularProgressIndicator() : RaisedButton(onPressed: (){
-              
-                  setState(() {
-                     _isLoggingLoading=true;
-                  });
-                  
+                  _performLogin();
                 },child: Text('Login',style: TextStyle(fontSize: 20)),splashColor: Colors.lightBlueAccent,
                 elevation: 4,)
                  
@@ -71,5 +86,12 @@ class _LoginPageState extends State<LoginPage> {
         ),
       )
     )));
+  }
+
+    @override
+  void dispose() {
+    userNameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }
