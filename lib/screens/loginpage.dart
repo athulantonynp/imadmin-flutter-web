@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imadmin/api/apiconstants.dart';
 import 'package:imadmin/api/imadminapi.dart';
 import 'package:imadmin/utils/admincolors.dart';
 
@@ -19,16 +20,22 @@ class _LoginPageState extends State<LoginPage> {
   final userNameController=TextEditingController();
   final passwordController=TextEditingController();
 
-
-
-  void _performLogin() async{
+  void _performLogin(BuildContext context) async{
 
     setState(() {_isLoggingLoading=true; });
     var api=MonsterAdminApi();
     api.performLogin(userNameController.text,passwordController.text).then((value)=>{
-      print(value)
+        if(value==ApiConstants.ERROR_STRING){
+            _displaySnackBar(context, value)
+        }
     });
     
+  }
+
+  _displaySnackBar(BuildContext context,String message) {
+    final snackBar = SnackBar(content: Text(message));
+    Scaffold.of(context).showSnackBar(snackBar);
+     setState(() {_isLoggingLoading=false; });
   }
 
 
@@ -78,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                ),
               _isLoggingLoading ? CircularProgressIndicator() : RaisedButton(onPressed: (){
-                  _performLogin();
+                  _performLogin(context);
                 },child: Text('Login',style: TextStyle(fontSize: 20)),splashColor: Colors.lightBlueAccent,
                 elevation: 4,)
                  

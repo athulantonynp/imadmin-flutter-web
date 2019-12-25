@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: AdminColors.primaryBlack,
       ),
-      home: LoginPage(title: 'IM Admin'),
+      home: new Scaffold(body: LoginPage(title: 'IM Admin')),
     );
   }
 }

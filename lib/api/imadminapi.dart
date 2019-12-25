@@ -10,7 +10,13 @@ class MonsterAdminApi{
         "username":username,
         "password":password
     }));
-    return response.body;
+
+    if(response.statusCode==200){
+        return response.body;
+    }else{
+      return ApiConstants.ERROR_STRING;
+    }
+    
   }
 
 }
