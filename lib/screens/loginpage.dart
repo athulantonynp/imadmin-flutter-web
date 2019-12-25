@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:imadmin/api/apiconstants.dart';
 import 'package:imadmin/api/imadminapi.dart';
+import 'package:imadmin/screens/dashboard.dart';
 import 'package:imadmin/utils/admincolors.dart';
-
-
+import 'package:imadmin/widgets/monsterbar.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -27,6 +28,8 @@ class _LoginPageState extends State<LoginPage> {
     api.performLogin(userNameController.text,passwordController.text).then((value)=>{
         if(value==ApiConstants.ERROR_STRING){
             _displaySnackBar(context, value)
+        }else{
+            Navigator.pushAndRemoveUntil(context, PageTransition(type: PageTransitionType.fade, child: DashBoard()),(e) => false)
         }
     });
     
@@ -43,9 +46,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title:  Text(widget.title),
-      ),
+      appBar:MonsterBar(false),
       body: Container(
         color: AdminColors.fromHex("#212121"),
         alignment:Alignment(0.0, 0.0) ,
