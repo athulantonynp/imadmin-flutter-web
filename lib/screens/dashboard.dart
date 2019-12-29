@@ -14,11 +14,11 @@ class DashBoard extends StatefulWidget {
   DashBoardState createState() => DashBoardState();
 }
 
-
-
 class DashBoardState extends State<DashBoard>{
 
   var _user=MonsterAdminApi().getUser();
+  final navigatorKey = GlobalKey<NavigatorState>();
+  var user=User();
   
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,12 @@ class DashBoardState extends State<DashBoard>{
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
           if(snapshot.hasData){
             if(snapshot.data!=null){
-              return Home(snapshot.data);
+              this.user=snapshot.data;
+              return Navigator(key: navigatorKey,
+              onGenerateRoute: (route)=>MaterialPageRoute(
+                settings: route,
+                builder: (context)=> Home(snapshot.data)
+              ),);
             }
           }else{
            return LoginPage(title: 'IM Admin');
@@ -40,7 +45,7 @@ class DashBoardState extends State<DashBoard>{
         },
       ),
       ),
-      drawer:  AppDrawer().getDrawer(),
+      drawer:  AppDrawer().getDrawer(navigatorKey,user,context),
     );
   }
 

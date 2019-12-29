@@ -1,10 +1,16 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:imadmin/models/user.dart';
+import 'package:imadmin/screens/home.dart';
+import 'package:imadmin/screens/portfolio.dart';
 
 class AppDrawer {
-  Drawer getDrawer() {
+  
+  Drawer getDrawer(GlobalKey<NavigatorState> navigatorKey,User user,BuildContext context) {
     return Drawer(
         
-        child: Container(
+      child: Container(
       color: Colors.black,
       child: ListView(
         children: <Widget>[
@@ -20,7 +26,9 @@ class AppDrawer {
               padding: EdgeInsets.all(8.0),
               splashColor: Colors.grey,
               onPressed: () {
-                print("object");
+                 
+                navigatorKey.currentState.push(MaterialPageRoute(builder: (context)=> Home(user)));
+                Navigator.pop(context);
               },
               child: Text(
                 "Home",
@@ -40,7 +48,9 @@ class AppDrawer {
               padding: EdgeInsets.all(8.0),
               splashColor: Colors.grey,
               onPressed: () {
-                print("object");
+                 
+               navigatorKey.currentState.push(MaterialPageRoute(builder: (context)=> Portfolio()));
+               Navigator.pop(context);
               },
               child: Text(
                 "Portfolio",
