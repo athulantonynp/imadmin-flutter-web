@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:imadmin/api/apiconstants.dart';
+import 'package:imadmin/models/user.dart';
 import 'package:shared_preferences_web/shared_preferences_web.dart';
 
 
@@ -13,7 +14,7 @@ class MonsterAdminApi{
     }));
 
     if(response.statusCode==200){
-        saveUser(username,password);
+        saveUser(username,password,response.body);
         return response.body;
     }else{
       return ApiConstants.ERROR_STRING;
@@ -21,37 +22,25 @@ class MonsterAdminApi{
     
   }
 
-  void saveUser(String userName,String password) async{
+  void saveUser(String userName,String password,String response) async{
+
     var prefs=SharedPreferencesPlugin();
-    prefs.setValue("", ApiConstants.USER_NAME_PREF, userName);
-    prefs.setValue("", ApiConstants.PASS_PREF, password);
-  }
-
-  Future<String> getUserName() async{
-
-    String result="";
-    var prefs=SharedPreferencesPlugin();
-     var items  = await  prefs.getAll();
-     items.forEach((k,v)=>{
-        if(k.toString()==ApiConstants.USER_NAME_PREF){
-          result= v.toString()
-        }
-     });
-
-     return result;
+    var user=User.parse(json.decode(response),password);
+    prefs.setValue("", ApiConstants.USER_PREF,json.encode(user) );
 
   }
 
-  Future<String> getPassword() async {
-   String result="";
+  Future<User> getUser() async{
+
+    User result;
     var prefs=SharedPreferencesPlugin();
      var items  = await  prefs.getAll();
      items.forEach((k,v)=>{
-        if(k.toString()==ApiConstants.PASS_PREF){
-          result= v.toString()
+        if(k.toString()==ApiConstants.USER_PREF){
+          result= User.fromJson(json.decode(v.toString()))
         }
      });
-
      return result;
+
   }
 }
