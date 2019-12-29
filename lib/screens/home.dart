@@ -62,7 +62,9 @@ class HomeState extends State<Home> {
     return TableRow(children: [
       _getCardRandom("#F44336", "Active Users", "30"),
       _getCardRandom("#607D8B", "Downloads", "12k"),
-      _getCardRandom("#2196F3", "Rating", "4.5")
+      _getCardRandom("#2196F3", "Rating", "4.5"),
+      _getCardRandom("#673AB7", "Drop-Offs", "12"),
+      _getCardRandom("#009688", "Retention", "5.8")
     ]);
   }
 }
@@ -104,7 +106,7 @@ Card _getCardRandom(String color, String title, String value) {
 Center getDummyChart(BuildContext context){
   return Center(
     child: Container(
-      color: AdminColors.fromHex("#03A9F4"),
+      color: AdminColors.fromHex("#212121"),
       height: MediaQuery.of(context).size.height / 2,
       width: MediaQuery.of(context).size.width * 0.9,
       child: BezierChart(
