@@ -22,6 +22,7 @@ dependencies:
   http: ^0.12.0+2
   shared_preferences_web: ^0.1.2+2
   page_transition: "^1.1.5"
+  bezier_chart: "^1.0.15"
 
 
 dev_dependencies:
