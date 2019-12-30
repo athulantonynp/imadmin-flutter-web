@@ -19,9 +19,6 @@ class HomeState extends State<Home> {
     return Scaffold(
         backgroundColor: AdminColors.fromHex("#212121"),
         body: SingleChildScrollView(
-
-          child: Container(
-            color: AdminColors.fromHex("#212121"),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +30,7 @@ class HomeState extends State<Home> {
                 
               ],
             ),
-        )));
+        ));
   }
 
   Row _buildKpiRow(BuildContext context){
@@ -95,7 +92,7 @@ Card _getCardRandom(String color, String title, String value) {
           child: Text(
             title,
             style: TextStyle(
-                color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+                color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
         Padding(
@@ -103,7 +100,7 @@ Card _getCardRandom(String color, String title, String value) {
           child: Text(
             value,
             style: TextStyle(
-                color: Colors.white, fontSize: 80, fontWeight: FontWeight.bold),
+                color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
           ),
         )
       ],
