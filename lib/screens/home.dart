@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bezier_chart/bezier_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:imadmin/models/user.dart';
@@ -80,7 +81,7 @@ class HomeState extends State<Home> {
 }
 
 Card _getCardRandom(String color, String title, String value) {
-  return Card(
+    return Card(
     semanticContainer: true,
     clipBehavior: Clip.antiAliasWithSaveLayer,
     color: AdminColors.fromHex(color),
@@ -88,19 +89,21 @@ Card _getCardRandom(String color, String title, String value) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.all(24),
-          child: Text(
+          padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
+          child: AutoSizeText(
             title,
             style: TextStyle(
-                color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                color: AdminColors.fromHex("#f5f5f5"), fontSize: 24, fontWeight: FontWeight.bold),
+                maxLines: 1,
           ),
         ),
         Padding(
           padding: EdgeInsets.fromLTRB(24, 0, 16, 16),
-          child: Text(
+          child: AutoSizeText(
             value,
             style: TextStyle(
-                color: Colors.white, fontSize: 40, fontWeight: FontWeight.bold),
+                color: Colors.white, fontSize: 50, fontWeight: FontWeight.bold),
+                maxLines: 1,
           ),
         )
       ],
@@ -109,7 +112,7 @@ Card _getCardRandom(String color, String title, String value) {
       borderRadius: BorderRadius.circular(16.0),
     ),
     elevation: 8,
-    margin: EdgeInsets.all(16),
+    margin: EdgeInsets.all(8),
   );
 }
 
