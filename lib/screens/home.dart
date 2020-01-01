@@ -19,18 +19,14 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AdminColors.fromHex("#212121"),
-        body: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
+        body: ListView(
+            children: <Widget>[
                 getWelcomeText(widget.user.name),
                 Table(children: [_buildTableRow()],),
                 getKPITitle(),
                 _buildKpiRow(context)
                 
               ],
-            ),
         ));
   }
 
@@ -95,6 +91,8 @@ Card _getCardRandom(String color, String title, String value) {
             style: TextStyle(
                 color: AdminColors.fromHex("#f5f5f5"), fontSize: 24, fontWeight: FontWeight.bold),
                 maxLines: 1,
+                stepGranularity: 4,
+                overflow: TextOverflow.ellipsis,
           ),
         ),
         Padding(
@@ -104,6 +102,8 @@ Card _getCardRandom(String color, String title, String value) {
             style: TextStyle(
                 color: Colors.white, fontSize: 50, fontWeight: FontWeight.bold),
                 maxLines: 1,
+                stepGranularity: 4,
+                overflow: TextOverflow.ellipsis,
           ),
         )
       ],
