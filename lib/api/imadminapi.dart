@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:imadmin/api/apiconstants.dart';
+import 'package:imadmin/models/shot.dart';
 import 'package:imadmin/models/user.dart';
 import 'package:shared_preferences_web/shared_preferences_web.dart';
 
@@ -20,6 +21,15 @@ class MonsterAdminApi{
       return ApiConstants.ERROR_STRING;
     }
     
+  }
+
+  Future<List<Shot>> getShots() async {
+    var requestUrl="https://api.dribbble.com/v2/user/shots?access_token="+ApiConstants.DRIBBLE_ACCESS_TOKEN+"&page=1&per_page=100";
+    var response=await http.get(requestUrl);
+    if (response.statusCode == 200) {
+      var list=json.encode(response.body) as List;
+      return list.map<Shot>((item)=>Shot.fromJson(item)).toList();
+    }
   }
 
   void saveUser(String userName,String password,String response) async{

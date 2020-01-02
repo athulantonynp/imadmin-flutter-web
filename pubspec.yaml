@@ -25,6 +25,8 @@ dependencies:
   bezier_chart: "^1.0.15"
   pie_chart: "^3.1.1"
   auto_size_text: ^2.1.0
+  json_serializable: ^3.2.5
+
 
 
 dev_dependencies:

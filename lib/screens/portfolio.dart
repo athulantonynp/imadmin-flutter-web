@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:imadmin/api/imadminapi.dart';
+import 'package:imadmin/models/shot.dart';
 import 'package:imadmin/utils/admincolors.dart';
 
 class Portfolio extends StatefulWidget {
@@ -58,12 +60,14 @@ class PortfolioState extends State<Portfolio>{
   }
 
 Future<void> _showShotsDialog(BuildContext context) {
+
+  
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Not in stock'),
-        content: const Text('This item is no longer available'),
+        title: Text('Edit Portfolio'),
+        content: getFutureBuilder(context),
         actions: <Widget>[
           FlatButton(
             child: Text('Ok'),
@@ -77,4 +81,36 @@ Future<void> _showShotsDialog(BuildContext context) {
   );
 }
 
+
+FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
+  var listFuture=MonsterAdminApi().getShots();
+  return FutureBuilder(
+      future: listFuture,
+      builder: (context,snap){
+        if (snap.connectionState == ConnectionState.none &&
+          snap.hasData == null) {
+        return Container();
+      }
+
+      if(snap.hasData){
+      return ListView.builder(
+        itemCount: snap.data.length,
+        itemBuilder: (context, index) {
+          Shot shot = snap.data[index];
+          print(shot.images.two_x);
+          return Column(
+            children: <Widget>[
+              Image.network(shot.images.two_x)
+            ],
+          );
+        },
+      );
+      }else{
+        return Container();
+      }
+
+      }
+      
+  );
+}
 }
