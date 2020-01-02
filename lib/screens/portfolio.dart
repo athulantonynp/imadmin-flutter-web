@@ -15,18 +15,20 @@ class PortfolioState extends State<Portfolio>{
         backgroundColor: AdminColors.fromHex("#212121"),
         body: SingleChildScrollView(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+          
               children: <Widget>[
-                getTitle()
-                
+                getTitle(context)
               ],
             ),
         ));
   }
 
-  Padding getTitle() {
-    return Padding(
+  Row getTitle(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 8,
+          child: Padding(
         padding: EdgeInsets.fromLTRB(32, 24, 24, 16),
         child: RichText(
           text: TextSpan(
@@ -38,7 +40,41 @@ class PortfolioState extends State<Portfolio>{
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 26))
             ],
           ),
-        ));
+        )),
+        ),
+        
+        Expanded(
+          flex: 1,
+          child: Padding(
+          padding: EdgeInsets.fromLTRB(32, 24, 24, 16),
+          child:  RaisedButton(onPressed: (){
+              _showShotsDialog(context);
+          },child: Text('Add More',style: TextStyle(fontSize: 20)),splashColor: Colors.lightBlueAccent,
+                elevation: 4,),
+        ),
+        )
+      ]
+    );
   }
+
+Future<void> _showShotsDialog(BuildContext context) {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Not in stock'),
+        content: const Text('This item is no longer available'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Ok'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
 }
