@@ -87,12 +87,14 @@ FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
   return FutureBuilder(
       future: listFuture,
       builder: (context,snap){
-        if (snap.connectionState == ConnectionState.none &&
-          snap.hasData == null) {
-        return Container();
-      }
+      //   if (snap.connectionState == ConnectionState.none &&
+      //     snap.hasData == null) {
+      //       print("returning container for empty state");
+      //   return Container();
+      // }
 
       if(snap.hasData){
+        print("returning data list");
       return ListView.builder(
         itemCount: snap.data.length,
         itemBuilder: (context, index) {
@@ -106,6 +108,7 @@ FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
         },
       );
       }else{
+        print("doesnt have data");
         return Container();
       }
 

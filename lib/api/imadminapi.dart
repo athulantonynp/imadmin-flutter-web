@@ -27,8 +27,12 @@ class MonsterAdminApi{
     var requestUrl="https://api.dribbble.com/v2/user/shots?access_token="+ApiConstants.DRIBBLE_ACCESS_TOKEN+"&page=1&per_page=100";
     var response=await http.get(requestUrl);
     if (response.statusCode == 200) {
-      var list=json.encode(response.body) as List;
-      return list.map<Shot>((item)=>Shot.fromJson(item)).toList();
+      Iterable list=json.decode(response.body);
+      var output=list.map<Shot>((item)=>Shot.fromJson(item)).toList();
+      print("======================"+output.length.toString());
+      return output; 
+    }else{
+      print("response is "+response.statusCode.toString());
     }
   }
 
