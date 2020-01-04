@@ -12,7 +12,8 @@ class Portfolio extends StatefulWidget {
 
 class PortfolioState extends State<Portfolio>{
 
-  
+   List<Shot> popupShots=new List();
+   List<Shot> actualShots=new List();
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,10 @@ class PortfolioState extends State<Portfolio>{
               ],
             ),
         ));
+  }
+
+  _onEditShotUpdated(){
+    print("pressed dismiss of shots dialog");
   }
 
   Row getTitle(BuildContext context) {
@@ -55,9 +60,9 @@ class PortfolioState extends State<Portfolio>{
           child:  RaisedButton(onPressed: (){
             showDialog(
               context: context,
-              child: EditShotDialog()
+              child: EditShotDialog(popupShots,_onEditShotUpdated)
             );
-          },child: Text('Add More',style: TextStyle(fontSize: 20)),splashColor: Colors.lightBlueAccent,
+          },child: Text('Update',style: TextStyle(fontSize: 20)),splashColor: Colors.lightBlueAccent,
                 elevation: 4,),
         ),
         )
