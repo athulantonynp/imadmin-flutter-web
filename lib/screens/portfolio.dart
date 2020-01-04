@@ -95,17 +95,19 @@ FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
 
       if(snap.hasData){
         print("returning data list");
-      return ListView.builder(
+      return Container(
+        width: 500,
+        child:  ListView.builder(
         itemCount: snap.data.length,
         itemBuilder: (context, index) {
           Shot shot = snap.data[index];
-          print(shot.images.two_x);
           return Column(
             children: <Widget>[
               Image.network(shot.images.two_x)
             ],
           );
         },
+      )
       );
       }else{
         print("doesnt have data");

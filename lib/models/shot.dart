@@ -13,8 +13,7 @@ class Shot{
   factory Shot.fromJson(Map<String, dynamic> jsonResponse){
 
     var imageList=jsonResponse['images'];
-    print(imageList);
-    var list=ShotImage.fromJson(json.decode(imageList));
+    var list=ShotImage.fromJson(imageList);
 
     var shot=Shot(title: jsonResponse['title'],published_at: jsonResponse['published_at'],images: list);
     return shot ;
