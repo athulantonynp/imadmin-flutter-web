@@ -110,14 +110,7 @@ FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
   return FutureBuilder(
       future: listFuture,
       builder: (context,snap){
-      //   if (snap.connectionState == ConnectionState.none &&
-      //     snap.hasData == null) {
-      //       print("returning container for empty state");
-      //   return Container();
-      // }
-
       if(snap.hasData){
-        print("returning data list");
       return Container(
         width: MediaQuery.of(context).size.width-(50),
         child:  GridView.builder(
