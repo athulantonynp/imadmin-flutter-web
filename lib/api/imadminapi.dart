@@ -29,7 +29,6 @@ class MonsterAdminApi{
     if (response.statusCode == 200) {
       Iterable list=json.decode(response.body);
       var output=list.map<Shot>((item)=>Shot.fromJson(item)).toList();
-      print("======================"+output.length.toString());
       return output; 
     }else{
       print("response is "+response.statusCode.toString());

@@ -7,6 +7,8 @@ class Shot{
   final String published_at;
   final ShotImage images;
   final int id;
+  bool isSelected=false;
+  
   
   Shot({this.title,this.published_at,this.images,this.id});
 
