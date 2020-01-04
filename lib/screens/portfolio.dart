@@ -96,8 +96,10 @@ FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
       if(snap.hasData){
         print("returning data list");
       return Container(
-        width: 500,
-        child:  ListView.builder(
+        width: MediaQuery.of(context).size.width-(50),
+        child:  GridView.builder(
+          gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                                   crossAxisCount: 4),
         itemCount: snap.data.length,
         itemBuilder: (context, index) {
           Shot shot = snap.data[index];
