@@ -66,6 +66,8 @@ Future<void> _showShotsDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16.0))),
         title: Text('Edit Portfolio'),
         content: getFutureBuilder(context),
         actions: <Widget>[
@@ -81,27 +83,25 @@ Future<void> _showShotsDialog(BuildContext context) {
   );
 }
 
-  Stack getShotCard(Shot shot){
-    return  Stack(
-        alignment: Alignment.bottomLeft,
-        children: <Widget>[
-          Image.network(
+  InkWell getShotCard(Shot shot){
+    return InkWell(
+      onTap: (){
+        print(shot.id);
+      },
+      child:  Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: Image.network(
             shot.images.normal,
             fit: BoxFit.fill,
           ),
-          Container(
-            color: Colors.black.withOpacity(0.5),
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Text(shot.title, style: TextStyle(fontSize: 16))
-              ],
-            ),
-          )
-        ]
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          elevation: 3
+        ),
     );
+
   }
 
 
@@ -112,6 +112,7 @@ FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
       builder: (context,snap){
       if(snap.hasData){
       return Container(
+        
         width: MediaQuery.of(context).size.width-(50),
         child:  GridView.builder(
           gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
@@ -128,7 +129,15 @@ FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
       )
       );
       }else{
-        return Container();
+        return Container(
+           child: new Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            new CircularProgressIndicator(),
+            new Text("Loading Shots"),
+          ],
+        ),
+        );
       }
 
       }
