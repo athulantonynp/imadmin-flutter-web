@@ -81,6 +81,29 @@ Future<void> _showShotsDialog(BuildContext context) {
   );
 }
 
+  Stack getShotCard(Shot shot){
+    return  Stack(
+        alignment: Alignment.bottomLeft,
+        children: <Widget>[
+          Image.network(
+            shot.images.normal,
+            fit: BoxFit.fill,
+          ),
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text(shot.title, style: TextStyle(fontSize: 16))
+              ],
+            ),
+          )
+        ]
+    );
+  }
+
 
 FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
   var listFuture=MonsterAdminApi().getShots();
@@ -105,19 +128,20 @@ FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context){
           Shot shot = snap.data[index];
           return Column(
             children: <Widget>[
-              Image.network(shot.images.two_x)
+              Padding(child: getShotCard(shot),padding: EdgeInsets.fromLTRB(16, 0, 16, 0),)
             ],
           );
         },
       )
       );
       }else{
-        print("doesnt have data");
         return Container();
       }
 
       }
       
   );
+
+
 }
 }
