@@ -7,6 +7,9 @@ class EditShotDialog extends StatefulWidget {
   Function onEditShotUpdated;
 
   EditShotDialog(this.popupShots, this.onEditShotUpdated);
+
+   Future<List<Shot>> listFuture = MonsterAdminApi().getShots();
+
   @override
   State<StatefulWidget> createState() {
     return EditShotDialogState();
@@ -14,8 +17,25 @@ class EditShotDialog extends StatefulWidget {
 }
 
 class EditShotDialogState extends State<EditShotDialog> {
+
+
+    
+
+    EditShotDialogState(){
+      Future<List<Shot>> listFuture = MonsterAdminApi().getShots();
+
+      listFuture.then((result)=>{
+      this.setState((){
+        
+        widget.popupShots.clear();
+        widget.popupShots.addAll(result);
+      })
+    });
+    }
+
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16.0))),
@@ -39,6 +59,47 @@ class EditShotDialogState extends State<EditShotDialog> {
         )       ],
     );
   }
+
+
+  Container getFutureBuilder(BuildContext context, List<Shot> shots, EditShotDialogState editShotDialogState) {
+  if(shots!=null && shots.length>0){
+      return Container(
+              width: MediaQuery.of(context).size.width - (50),
+              child: GridView.builder(
+                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4),
+                itemCount: shots.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: <Widget>[
+                      Padding(
+                        child: getShotCard(
+                             shots[index], index, shots, editShotDialogState),
+                        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      )
+                    ],
+                  );
+                },
+              ));
+  }else{
+    return Container(
+            child: new Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
+                  child: new CircularProgressIndicator()  ,
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                  child: new Text("Loading Shots"),
+                )
+              ],
+            ),
+          );
+  }
+
+}
 }
 
 InkWell getShotCard(
@@ -46,7 +107,10 @@ InkWell getShotCard(
   return InkWell(
     onTap: () {
       state.setState(() {
+       
+        //shot.isSelected=!shot.isSelected;
         shots[index].isSelected = !shots[index].isSelected;
+
       });
     },
     child: Card(
@@ -86,53 +150,4 @@ Widget getSelectedStateWidget(bool isSelected) {
   }
 }
 
-FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context,
-    List<Shot> shots, EditShotDialogState editShotDialogState) {
-  var listFuture = MonsterAdminApi().getShots();
-  // listFuture.then((value)=>(){
-  //         shots.clear();
-  //         shots.addAll(value);
-  // });
-  return FutureBuilder(
-      future: listFuture,
-      builder: (context, snap) {
-        if (snap.hasData) {
-          
-          return Container(
-              width: MediaQuery.of(context).size.width - (50),
-              child: GridView.builder(
-                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4),
-                itemCount: snap.data.length,
-                itemBuilder: (context, index) {
-                  Shot shot = snap.data[index];
-                  return Column(
-                    children: <Widget>[
-                      Padding(
-                        child: getShotCard(
-                            shot, index, shots, editShotDialogState),
-                        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                      )
-                    ],
-                  );
-                },
-              ));
-        } else {
-          return Container(
-            child: new Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: EdgeInsets.fromLTRB(16, 0, 8, 0),
-                  child: new CircularProgressIndicator()  ,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: new Text("Loading Shots"),
-                )
-              ],
-            ),
-          );
-        }
-      });
-}
+
