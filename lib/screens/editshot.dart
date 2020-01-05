@@ -89,12 +89,15 @@ Widget getSelectedStateWidget(bool isSelected) {
 FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context,
     List<Shot> shots, EditShotDialogState editShotDialogState) {
   var listFuture = MonsterAdminApi().getShots();
+  // listFuture.then((value)=>(){
+  //         shots.clear();
+  //         shots.addAll(value);
+  // });
   return FutureBuilder(
       future: listFuture,
       builder: (context, snap) {
         if (snap.hasData) {
-          shots.clear();
-          shots.addAll(snap.data);
+          
           return Container(
               width: MediaQuery.of(context).size.width - (50),
               child: GridView.builder(

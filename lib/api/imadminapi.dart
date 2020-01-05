@@ -31,12 +31,10 @@ class MonsterAdminApi{
       }
     }
     ).toList();
-
-    print("size of the list "+jsonList.length.toString());
     return jsonList;
 }
   
-  saveShotsToServer(List<Shot> shots) async{
+  Future<int> saveShotsToServer(List<Shot> shots) async{
 
     var user= await getUser();
 
@@ -46,7 +44,7 @@ class MonsterAdminApi{
         "shots":json.encode(shotToJson(shots))
     }));
 
-    print(response.statusCode);
+    return response.statusCode;
   }
 
   Future<List<Shot>> getShots() async {
