@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imadmin/api/imadminapi.dart';
 import 'package:imadmin/models/shot.dart';
 import 'package:imadmin/screens/editshot.dart';
 import 'package:imadmin/utils/admincolors.dart';
@@ -29,8 +30,17 @@ class PortfolioState extends State<Portfolio>{
         ));
   }
 
+  Widget getCurrentShots(){
+    
+  }
+
   _onEditShotUpdated(){
-    print("pressed dismiss of shots dialog");
+    setState(() {
+       actualShots.clear();
+        actualShots.addAll(popupShots);
+        MonsterAdminApi().saveShotsToServer(popupShots);
+    });
+   
   }
 
   Row getTitle(BuildContext context) {

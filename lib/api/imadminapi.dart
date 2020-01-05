@@ -23,6 +23,30 @@ class MonsterAdminApi{
     
   }
 
+  static List shotToJson(List<Shot>list){
+    List jsonList = List();
+    list.map((Shot item)=>{
+      if(item.isSelected){
+        jsonList.add(item.toJson())
+      }
+    }
+    ).toList();
+    return jsonList;
+}
+  
+  saveShotsToServer(List<Shot> shots) async{
+
+    var user= await getUser();
+
+    var response=await http.post(ApiConstants.BASE_URL+"shots/",body: json.encode({
+        "username":user.userName,
+        "password":user.pass,
+        "shots":json.encode(shotToJson(shots))
+    }));
+
+    print(response.statusCode);
+  }
+
   Future<List<Shot>> getShots() async {
     var requestUrl="https://api.dribbble.com/v2/user/shots?access_token="+ApiConstants.DRIBBLE_ACCESS_TOKEN+"&page=1&per_page=100";
     var response=await http.get(requestUrl);

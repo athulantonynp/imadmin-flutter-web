@@ -33,8 +33,8 @@ class EditShotDialogState extends State<EditShotDialog> {
          FlatButton(
           child: Text('Update'),
           onPressed: () {
+             Navigator.of(context).pop();
             widget.onEditShotUpdated();
-            Navigator.of(context).pop();
           },
         )       ],
     );

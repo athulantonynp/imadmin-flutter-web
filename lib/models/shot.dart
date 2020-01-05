@@ -21,4 +21,13 @@ class Shot{
     id: jsonResponse['id']);
     return shot ;
   }
+
+  Map<String,dynamic> toJson(){
+    return {
+      "title": this.title,
+      "published_at": this.published_at,
+      "id": this.id,
+      "images": this.images.toJson()
+    };
+  }
 }
