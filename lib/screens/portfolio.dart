@@ -110,6 +110,7 @@ class PortfolioState extends State<Portfolio>{
           child: Padding(
           padding: EdgeInsets.fromLTRB(32, 24, 24, 16),
           child:  RaisedButton(onPressed: (){
+            popupShots.clear();
             showDialog(
               context: context,
               child: EditShotDialog(popupShots,_onEditShotUpdated)
