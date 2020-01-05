@@ -31,6 +31,8 @@ class MonsterAdminApi{
       }
     }
     ).toList();
+
+    print("size of the list "+jsonList.length.toString());
     return jsonList;
 }
   

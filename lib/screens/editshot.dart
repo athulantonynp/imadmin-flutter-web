@@ -93,6 +93,7 @@ FutureBuilder<List<Shot>> getFutureBuilder(BuildContext context,
       future: listFuture,
       builder: (context, snap) {
         if (snap.hasData) {
+          shots.clear();
           shots.addAll(snap.data);
           return Container(
               width: MediaQuery.of(context).size.width - (50),
