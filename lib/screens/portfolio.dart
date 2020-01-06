@@ -16,23 +16,83 @@ class PortfolioState extends State<Portfolio>{
    List<Shot> popupShots=new List();
    List<Shot> actualShots=new List();
 
+    Future<List<Shot>> currentShots;
+
+   @override
+  void initState() {
+    super.initState();
+    currentShots=MonsterAdminApi().getCurrentShots();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AdminColors.fromHex("#212121"),
         body: SingleChildScrollView(
-            child: Column(
-          
-              children: <Widget>[
-                getTitle(context)
-              ],
-            ),
-        ));
+          child: Column(
+            children: <Widget>[
+            getTitle(context),
+             getCurrentShots(context, currentShots)
+          ],
+          ),
+        ),
+        );
   }
 
-  Widget getCurrentShots(){
-    
+  FutureBuilder<List<Shot>> getCurrentShots(BuildContext context,Future<List<Shot>> future){
+    return FutureBuilder<List<Shot>>(
+
+      future: future,
+      builder: (context,snapshot){
+         if (snapshot.hasData) {
+                return  GridView.builder(
+                  shrinkWrap: true,
+                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4),
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: <Widget>[
+                      Padding(
+                        child: getShotCard(snapshot.data[index]),
+                        padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                      )
+                    ],
+                  );
+                },
+              );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+
+              // By default, show a loading spinner.
+              return CircularProgressIndicator();
+      },
+
+
+    );
   }
+
+  InkWell getShotCard(Shot shot) {
+  return InkWell(
+    onTap: () {},
+    child: Card(
+        semanticContainer: true,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Stack(
+          children: <Widget>[
+            Image.network(
+              shot.images.normal,
+              fit: BoxFit.fill,
+            ),
+          ],
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        elevation: 3),
+  );
+}
 
     _displaySnackBar(BuildContext context,String message) {
     final snackBar = SnackBar(content: Text(message));

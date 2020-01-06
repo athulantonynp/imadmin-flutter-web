@@ -65,8 +65,14 @@ class MonsterAdminApi {
     return outputList;
   }
 
+  Future<List<Shot>> getCurrentShots() async{
+     var user = await getUser();
+  var response = await http.get(ApiConstants.BASE_URL + "shots/"+"?username="+user.userName+"&password="+user.pass);
+    Iterable responseJson=json.decode(response.body);
+    return responseJson.map((item)=> Shot.fromJson(item)).toList();
+  }
+
   Future<http.Response> getShotsFromServer(int page) async {
-    print("calling for page " + page.toString());
     var requestUrl = "https://api.dribbble.com/v2/user/shots?access_token=" +
         ApiConstants.DRIBBLE_ACCESS_TOKEN +
         "&page=" +
