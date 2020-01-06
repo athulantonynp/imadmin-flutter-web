@@ -69,7 +69,9 @@ class MonsterAdminApi {
      var user = await getUser();
   var response = await http.get(ApiConstants.BASE_URL + "shots/"+"?username="+user.userName+"&password="+user.pass);
     Iterable responseJson=json.decode(response.body);
-    return responseJson.map((item)=> Shot.fromJson(item)).toList();
+    var list=responseJson.map((item)=> Shot.fromJson(item)).toList();
+    list.sort((a,b) =>b.published_at.compareTo(a.published_at));
+    return list;
   }
 
   Future<http.Response> getShotsFromServer(int page) async {
