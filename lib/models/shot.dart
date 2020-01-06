@@ -4,7 +4,7 @@ import 'package:imadmin/models/shotimage.dart';
 
 class Shot{
   final String title;
-  final String published_at;
+  final DateTime published_at;
   final ShotImage images;
   final int id;
   bool isSelected=false;
@@ -17,7 +17,7 @@ class Shot{
     var imageList=jsonResponse['images'];
     var list=ShotImage.fromJson(imageList);
 
-    var shot=Shot(title: jsonResponse['title'],published_at: jsonResponse['published_at'],images: list,
+    var shot=Shot(title: jsonResponse['title'],published_at: DateTime.parse(jsonResponse['published_at']),images: list,
     id: jsonResponse['id']);
     return shot ;
   }
@@ -25,7 +25,7 @@ class Shot{
   Map<String,dynamic> toJson(){
     return {
       "title": this.title,
-      "published_at": this.published_at,
+      "published_at": this.published_at.toIso8601String(),
       "id": this.id,
       "images": this.images.toJson()
     };

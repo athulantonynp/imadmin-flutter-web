@@ -42,32 +42,31 @@ class MonsterAdminApi {
   }
 
   Future<List<Shot>> getShots() async {
-
     List<Shot> outputList = new List();
 
-     for (int i = 1; i < 10; i++) {
-          var response =  await getShotsFromServer(i);
+    for (int i = 1; i < 10; i++) {
+      var response = await getShotsFromServer(i);
 
-          if (response.statusCode == 200) {
-              Iterable list = json.decode(response.body);
-              if (list.length > 0) {
-                outputList.addAll(
-                    list.map<Shot>((item) => Shot.fromJson(item)).toList());
-
-              } else {
-                break;
-              }
-            } else {
-              break;
-            }
+      if (response.statusCode == 200) {
+        Iterable list = json.decode(response.body);
+        if (list.length > 0) {
+          outputList
+              .addAll(list.map<Shot>((item) => Shot.fromJson(item)).toList());
+        } else {
+          break;
+        }
+      } else {
+        break;
+      }
     }
 
-    
+    outputList.sort((a,b) =>b.published_at.compareTo(a.published_at));
+
     return outputList;
   }
 
   Future<http.Response> getShotsFromServer(int page) async {
-    print("calling for page "+page.toString());
+    print("calling for page " + page.toString());
     var requestUrl = "https://api.dribbble.com/v2/user/shots?access_token=" +
         ApiConstants.DRIBBLE_ACCESS_TOKEN +
         "&page=" +
