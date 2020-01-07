@@ -30,4 +30,8 @@ class Shot{
       "images": this.images.toJson()
     };
   }
+
+  bool contains(Shot element) {
+    return element.id==this.id;
+  }
 }

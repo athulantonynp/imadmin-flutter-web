@@ -4,11 +4,12 @@ import 'package:imadmin/models/shot.dart';
 
 class EditShotDialog extends StatefulWidget {
   List<Shot> popupShots;
+  List<Shot> actualShots;
   Function onEditShotUpdated;
 
-  EditShotDialog(this.popupShots, this.onEditShotUpdated);
+  EditShotDialog(this.popupShots, this.onEditShotUpdated,this.actualShots);
 
-   Future<List<Shot>> listFuture = MonsterAdminApi().getShots();
+   //Future<List<Shot>> listFuture = MonsterAdminApi().getShots();
 
   @override
   State<StatefulWidget> createState() {
@@ -19,10 +20,9 @@ class EditShotDialog extends StatefulWidget {
 class EditShotDialogState extends State<EditShotDialog> {
 
 
-    
 
     EditShotDialogState(){
-      Future<List<Shot>> listFuture = MonsterAdminApi().getShots();
+      Future<List<Shot>> listFuture = MonsterAdminApi().getShots(widget.actualShots);
 
       listFuture.then((result)=>{
       this.setState((){
@@ -32,6 +32,8 @@ class EditShotDialogState extends State<EditShotDialog> {
       })
     });
     }
+
+  
 
   @override
   Widget build(BuildContext context) {

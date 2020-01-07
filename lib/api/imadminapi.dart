@@ -41,9 +41,12 @@ class MonsterAdminApi {
     return response.statusCode;
   }
 
-  Future<List<Shot>> getShots() async {
+  Future<List<Shot>> getShots(List<Shot> shots) async {
     List<Shot> outputList = new List();
 
+  //  var currentIds=currentShots.map((item)=>item.id) as List<int>;
+
+  //  print(currentIds.length.toString()+" items");
     for (int i = 1; i < 10; i++) {
       var response = await getShotsFromServer(i);
 
@@ -62,6 +65,12 @@ class MonsterAdminApi {
 
     outputList.sort((a,b) =>b.published_at.compareTo(a.published_at));
 
+    // for(Shot item in outputList){
+    //   if(currentIds.contains(item.id)){
+    //     item.isSelected=true;
+    //   }
+    // }
+
     return outputList;
   }
 
@@ -71,6 +80,7 @@ class MonsterAdminApi {
     Iterable responseJson=json.decode(response.body);
     var list=responseJson.map((item)=> Shot.fromJson(item)).toList();
     list.sort((a,b) =>b.published_at.compareTo(a.published_at));
+    print("Returning "+list.length.toString());
     return list;
   }
 
