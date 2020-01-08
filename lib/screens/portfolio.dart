@@ -16,7 +16,11 @@ class PortfolioState extends State<Portfolio> {
   List<Shot> actualShots = new List();
 
   PortfolioState(){
-     MonsterAdminApi().getCurrentShots().then((result) => {
+     getShots();
+  }
+
+  getShots(){
+    MonsterAdminApi().getCurrentShots().then((result) => {
 
           this.setState(() {
             this.actualShots.clear();
@@ -103,9 +107,17 @@ class PortfolioState extends State<Portfolio> {
     Navigator.of(context, rootNavigator: true).pop('dialog');
     if (result == 200) {
       _displaySnackBar(context, "Shots updated successfully");
+      reInitShots();
     } else {
       _displaySnackBar(context, "Failed to update shots.Please try again");
     }
+  }
+
+  reInitShots(){
+      setState(() {
+        this.actualShots.clear();
+        getShots();
+      });
   }
 
   _showShotSaveDialog(BuildContext context) {
