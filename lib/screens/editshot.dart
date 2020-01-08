@@ -13,7 +13,7 @@ class EditShotDialog extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return EditShotDialogState();
+    return EditShotDialogState(actualShots);
   }
 }
 
@@ -21,8 +21,8 @@ class EditShotDialogState extends State<EditShotDialog> {
 
 
 
-    EditShotDialogState(){
-      Future<List<Shot>> listFuture = MonsterAdminApi().getShots(widget.actualShots);
+    EditShotDialogState(List<Shot> actualShots){
+      Future<List<Shot>> listFuture = MonsterAdminApi().getShots(actualShots);
 
       listFuture.then((result)=>{
       this.setState((){
