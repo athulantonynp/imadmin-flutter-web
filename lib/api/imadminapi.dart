@@ -49,8 +49,6 @@ class MonsterAdminApi {
     for(Shot shot in currentShots){
       currentIds.add(shot.id);
     }
-
-    print(currentIds.length.toString()+" items");
     for (int i = 1; i < 10; i++) {
       var response = await getShotsFromServer(i);
 
@@ -84,7 +82,6 @@ class MonsterAdminApi {
     Iterable responseJson=json.decode(response.body);
     var list=responseJson.map((item)=> Shot.fromJson(item)).toList();
     list.sort((a,b) =>b.published_at.compareTo(a.published_at));
-    print("Returning "+list.length.toString());
     return list;
   }
 
