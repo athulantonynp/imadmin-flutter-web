@@ -31,6 +31,8 @@ class MonsterAdminApi {
   Future<int> saveShotsToServer(List<Shot> shots) async {
     var user = await getUser();
 
+    shots.sort((a,b) =>b.published_at.compareTo(a.published_at));
+
     var response = await http.post(ApiConstants.BASE_URL + "shots/",
         body: json.encode({
           "username": user.userName,

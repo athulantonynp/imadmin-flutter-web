@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "inspiredmonster-136b1"
+  },
+  "targets": {
+    "inspiredmonster-136b1": {
+      "hosting": {
+        "admin": [
+          "monsteradmin"
+        ]
+      }
+    }
+  }
+}
