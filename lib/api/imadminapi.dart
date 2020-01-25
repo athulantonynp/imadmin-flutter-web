@@ -74,7 +74,7 @@ class MonsterAdminApi {
         item.isSelected=true;
       }
     }
-
+    
     return outputList;
   }
 

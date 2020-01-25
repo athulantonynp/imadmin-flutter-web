@@ -2,36 +2,40 @@ import 'dart:convert';
 
 import 'package:imadmin/models/shotimage.dart';
 
-class Shot{
+class Shot {
   final String title;
   final DateTime published_at;
   final ShotImage images;
   final int id;
-  bool isSelected=false;
-  
-  
-  Shot({this.title,this.published_at,this.images,this.id});
+  bool isSelected = false;
+  final String description;
 
-  factory Shot.fromJson(Map<String, dynamic> jsonResponse){
+  Shot({this.title, this.published_at, this.images, this.id, this.description});
 
-    var imageList=jsonResponse['images'];
-    var list=ShotImage.fromJson(imageList);
+  factory Shot.fromJson(Map<String, dynamic> jsonResponse) {
+    var imageList = jsonResponse['images'];
+    var list = ShotImage.fromJson(imageList);
 
-    var shot=Shot(title: jsonResponse['title'],published_at: DateTime.parse(jsonResponse['published_at']),images: list,
-    id: jsonResponse['id']);
-    return shot ;
+    var shot = Shot(
+        title: jsonResponse['title'],
+        published_at: DateTime.parse(jsonResponse['published_at']),
+        images: list,
+        id: jsonResponse['id'],
+        description: jsonResponse['description']);
+    return shot;
   }
 
-  Map<String,dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
       "title": this.title,
       "published_at": this.published_at.toIso8601String(),
       "id": this.id,
+      "description": this.description,
       "images": this.images.toJson()
     };
   }
 
   bool contains(Shot element) {
-    return element.id==this.id;
+    return element.id == this.id;
   }
 }
